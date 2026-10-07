@@ -1,5 +1,19 @@
 # Guarantees and limits
 
+## Versioning and compatibility
+
+Starting with 1.0.0, Sutuy follows [Semantic Versioning](https://semver.org/) for the
+exported functions, types, and behavior described in the [API reference](./api.md).
+Incompatible public API changes require a new major version; compatible additions
+use minor releases and compatible fixes use patch releases.
+
+Version-1 fixtures remain readable by `parseFixture` and replayable with the same
+bytes and cuts throughout 1.x. Fixtures created with 0.1.0 need no migration.
+Generation strategies and the selected or reduced cuts can evolve across releases
+within the documented guarantees. Preserve a fixture, rather than only a seed, for
+long-term regression tests. The same generator version, input, and options remain
+deterministic.
+
 ## Bytes, chunks, and messages
 
 The character `🌊` is four UTF-8 bytes: `f0 9f 8c 8a`. A stream may deliver them as

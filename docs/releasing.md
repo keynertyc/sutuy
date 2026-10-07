@@ -1,39 +1,60 @@
 # Releasing Sutuy
 
-Repository: [keynertyc/sutuy](https://github.com/keynertyc/sutuy). This guide covers
-the first release and later updates. The existing CI workflow validates changes;
-it does not publish.
+Repository: [keynertyc/sutuy](https://github.com/keynertyc/sutuy). Releases currently
+use the manual process below. The existing CI workflow validates changes; it does
+not publish.
 
-## First release
+## Manual releases
 
-1. Use an npm account with a verified email and publishing 2FA enabled. Authenticate
-   on your own machine with `npm login`, then confirm the account with `npm whoami`.
+1. Choose an unused version according to the
+   [compatibility policy](./semantics.md#versioning-and-compatibility). Update
+   `package.json` and the changelog. Preserve previously published versions and tags.
+2. Use an npm account with publishing access, a verified email, and publishing 2FA
+   enabled. Confirm the account with `npm whoami`; use `npm login` if needed.
    Keep passwords, tokens, and 2FA responses out of issues, chat, and source files.
-2. Check the registry using `npm view sutuy name version`. An E404 indicates there
-   is no package visible under that exact name; it does not reserve the name or
-   guarantee that npm naming rules will allow it. Network/authentication failures
-   are not evidence of availability. If the name is taken, agree on an alternative
-   before changing metadata or examples.
-3. Verify the version in `package.json` (`0.1.0` for the first release), finalize the
-   changelog, and update the development-status notices in both READMEs as part of
-   the authorized release. Commit those changes and wait for all
-   [CI jobs](https://github.com/keynertyc/sutuy/actions/workflows/ci.yml) to pass.
-4. From a clean checkout, run `pnpm install --frozen-lockfile`, `pnpm check`, and
-   `npm pack --dry-run`. Inspect the artifact file list and version. The allowlist
-   includes runtime output, documentation, and examples; there are no runtime
+3. From the package root, check whether the target version already exists:
+
+   ```sh
+   SUTUY_VERSION=$(node -p "require('./package.json').version")
+   npm view "sutuy@$SUTUY_VERSION" version --registry=https://registry.npmjs.org
+   ```
+
+   An E404 indicates that the version is not visible in the registry. Network or
+   authentication failures do not establish availability. If it already exists,
+   verify whether the release completed earlier before choosing another version.
+4. Run `pnpm install --frozen-lockfile` and `pnpm check`. Dependency script approvals
+   live in `pnpm-workspace.yaml`; review a changed dependency before granting a new
+   approval. Commit and push the release changes, then wait for every
+   [CI job](https://github.com/keynertyc/sutuy/actions/workflows/ci.yml) on that commit
+   to pass.
+5. From the unchanged release checkout, run `npm pack --ignore-scripts`. The build
+   already passed in the previous step. Inspect the archive's file list and version:
+   it includes runtime output, documentation, and examples, with no runtime
    dependencies or install hooks.
-5. Once the maintainer authorizes publication, run `npm publish --access public`
-   from the package root and complete the 2FA prompt. This is the public release
-   step; the commands before it do not publish. Local publishing does not produce
-   GitHub Actions provenance.
-6. Verify `npm view sutuy@0.1.0 version`, install `sutuy@0.1.0` in a clean consumer,
-   and confirm the [npm package page](https://www.npmjs.com/package/sutuy). Create
-   the matching `v0.1.0` Git tag and GitHub release for the published commit.
+6. Once publication is authorized, publish the reviewed archive from the same
+   terminal and complete npm's account verification:
+
+   ```sh
+   npm publish "./sutuy-${SUTUY_VERSION}.tgz" --access public --registry=https://registry.npmjs.org
+   ```
+
+   Local publishing does not produce GitHub Actions provenance. npm may need a few
+   minutes to process the release before it becomes available.
+7. Verify the version and archive integrity with
+   `npm view "sutuy@$SUTUY_VERSION" version dist.integrity --json`, install that exact
+   version in a clean consumer, and check the
+   [npm package page](https://www.npmjs.com/package/sutuy). Tag the published commit
+   and create its GitHub release:
+
+   ```sh
+   git tag -a "v${SUTUY_VERSION}" -m "Sutuy ${SUTUY_VERSION}"
+   git push origin "v${SUTUY_VERSION}"
+   ```
 
 Direct interactive publishing requires account 2FA. See npm's
 [unscoped package publishing guide](https://docs.npmjs.com/creating-and-publishing-unscoped-public-packages/).
 
-## Subsequent releases through GitHub Actions
+## Future releases through GitHub Actions
 
 Prefer npm trusted publishing (OIDC) so CI does not need a stored npm write token.
 After the package exists, add a manually triggered `.github/workflows/publish.yml`

@@ -1,6 +1,6 @@
 # Contributing
 
-Use Node 22.12 or later and pnpm 12.9.1. Run `pnpm install --frozen-lockfile`, then
+Use Node 24 and pnpm 12.9.1 for development. Run `pnpm install --frozen-lockfile`, then
 `pnpm check`. Keep the package independent of any sibling checkout.
 
 After changing dependencies or the pinned pnpm version, run `pnpm install` and
@@ -33,4 +33,5 @@ Relative Markdown links are checked automatically.
 
 The [CI workflow](https://github.com/keynertyc/sutuy/actions/workflows/ci.yml) checks
 Node 22, 24, and 26 on pushes to `main` and pull requests. It does not publish.
-Follow [release setup](./docs/releasing.md) for the first release.
+Follow the [compatibility policy](./docs/semantics.md#versioning-and-compatibility)
+and [release guide](./docs/releasing.md) when preparing a new version.
