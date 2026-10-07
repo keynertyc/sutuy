@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — Unreleased
+## 0.1.0
 
 - Versioned byte-exact fixtures and pull-driven WHATWG stream replay.
 - Deterministic partition exploration with UTF-8 and framing targets.

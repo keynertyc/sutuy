@@ -9,10 +9,13 @@ boundaries from a failure, and gives you a JSON fixture for a permanent regressi
 Zero runtime dependencies. Strict TypeScript. Ordinary assertions. No server, network
 access, or test-framework dependency. Uses WHATWG `ReadableStream<Uint8Array>`.
 
-**Status:** v0.1.0 development release; not published yet. Repository:
-[keynertyc/sutuy](https://github.com/keynertyc/sutuy). The npm name will be confirmed
-before publication. To use this checkout, run `pnpm install`, then
-`pnpm check`. The intended installation command after publication is `npm install -D sutuy`.
+Repository: [keynertyc/sutuy](https://github.com/keynertyc/sutuy).
+
+```sh
+npm install -D sutuy
+```
+
+To develop from this checkout, run `pnpm install`, then `pnpm check`.
 
 [Español](./README.es.md) · [API](./docs/api.md) · [Guarantees and limits](./docs/semantics.md)
 · [Integrations](./docs/integrations.md) · [Runnable examples](./examples/README.md)

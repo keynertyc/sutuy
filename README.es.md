@@ -7,9 +7,11 @@ de un evento SSE. Sutuy prueba tu consumidor con distintas divisiones de los mis
 bytes y reduce las divisiones necesarias para reproducir un error. El resultado se
 puede guardar como JSON y usar en una prueba de regresión.
 
-Estado: versión 0.1.0 en desarrollo, todavía sin publicar. Repositorio:
-[keynertyc/sutuy](https://github.com/keynertyc/sutuy). La disponibilidad del nombre
-en npm se confirmará antes de la publicación.
+Repositorio: [keynertyc/sutuy](https://github.com/keynertyc/sutuy).
+
+```sh
+npm install -D sutuy
+```
 
 ## Uso básico
 

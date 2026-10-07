@@ -1,7 +1,8 @@
 # Releasing Sutuy
 
-Repository: [keynertyc/sutuy](https://github.com/keynertyc/sutuy). The package is
-currently unpublished. The existing CI workflow validates changes; it does not publish.
+Repository: [keynertyc/sutuy](https://github.com/keynertyc/sutuy). This guide covers
+the first release and later updates. The existing CI workflow validates changes;
+it does not publish.
 
 ## First release
 

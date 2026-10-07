@@ -22,6 +22,10 @@
     "examples"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "engines": {
     "node": ">=22.12.0"
   },
