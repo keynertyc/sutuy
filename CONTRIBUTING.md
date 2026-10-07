@@ -3,10 +3,14 @@
 Use Node 22.12 or later and pnpm 12.9.1. Run `pnpm install --frozen-lockfile`, then
 `pnpm check`. Keep the package independent of any sibling checkout.
 
+After changing dependencies or the pinned pnpm version, run `pnpm install` and
+commit the complete `pnpm-lock.yaml`, including its package manager metadata.
+
 If dependencies are already installed but pnpm's pinned-version bootstrap cannot
 reach the registry, `pnpm with current check` uses the installed pnpm executable.
-Use the pinned version above for reproducible checks. The built demo can also run
-directly with `node examples/demo.mjs`.
+This fallback skips package manager bootstrap checks. Before a release, also verify
+`pnpm install --frozen-lockfile` using the pinned version above. The built demo can
+run directly with `node examples/demo.mjs`.
 
 Use `pnpm test:watch` during development and `pnpm format` before the final check.
 Tests should exercise public behavior and realistic consumers. Add a failing

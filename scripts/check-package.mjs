@@ -17,9 +17,13 @@ const run = (command, args, cwd) =>
     env: { ...process.env, npm_config_cache: join(temp, 'cache'), NODE_PATH: '' },
   });
 try {
-  const [pack] = JSON.parse(
+  const packOutput = JSON.parse(
     run(npm, ['pack', '--ignore-scripts', '--json', '--pack-destination', temp], root),
   );
+  // npm 11 returns an array; npm 12 keys the results by package name.
+  const packs = Array.isArray(packOutput) ? packOutput : Object.values(packOutput);
+  assert.equal(packs.length, 1, 'Expected exactly one packed package');
+  const [pack] = packs;
   const allowed =
     /^(dist\/|docs\/|examples\/|README(?:\.es)?\.md$|LICENSE$|CONTRIBUTING\.md$|CHANGELOG\.md$|package\.json$)/;
   for (const file of pack.files)
