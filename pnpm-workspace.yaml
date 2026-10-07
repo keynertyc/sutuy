@@ -1,0 +1,3 @@
+# esbuild's postinstall prepares and validates its platform-specific binary.
+allowBuilds:
+  esbuild@0.28.1: true
